@@ -8,16 +8,12 @@ using Newtonsoft.Json;
 
 namespace ProxyManager.Model
 {
-	public class ConfigOperator
+	public static class ConfigOperator
 	{
-		private string _savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProxyManager");
-		private string _configFile;
+		private static string _savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProxyManager");
+		private static string _configFile;
 
-		private List<ConfigData> _configDataList = new List<ConfigData>();
-
-		public List<ConfigData> ConfigDataList { get; set; }
-
-		public ConfigOperator()
+		static ConfigOperator()
 		{
 			if (!Directory.Exists(_savePath))
 			{
@@ -25,21 +21,29 @@ namespace ProxyManager.Model
 			}
 
 			_configFile = Path.Combine(_savePath, "config.json");
-		}
 
-		public void SaveConfig()
-		{
-			using (var sw = new StreamWriter(_configFile, false))
+			if (!File.Exists(_configFile))
 			{
-				sw.Write(JsonConvert.SerializeObject(ConfigDataList));
+				using (var f = File.Create(_configFile))
+				{
+					f.Close();
+				}
 			}
 		}
 
-		public void LoadConfig()
+		public static void SaveConfig(List<ConfigData> configDataList)
+		{
+			using (var sw = new StreamWriter(_configFile, false))
+			{
+				sw.Write(JsonConvert.SerializeObject(configDataList));
+			}
+		}
+
+		public static List<ConfigData> LoadConfig()
 		{
 			using (var sr = new StreamReader(_configFile))
 			{
-				ConfigDataList = JsonConvert.DeserializeObject<List<ConfigData>>(sr.ReadToEnd());
+				return JsonConvert.DeserializeObject<List<ConfigData>>(sr.ReadToEnd());
 			}
 		}
 	}

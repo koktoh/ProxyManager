@@ -7,13 +7,25 @@ using System.Net;
 
 namespace ProxyManager.Model
 {
-	public class ProxyOperator
+	public static class ProxyOperator
 	{
-		public ProxyOperator() { }
+		static ProxyOperator() { }
 
-		public void SetProxy()
+		public static void SetProxy(ConfigData data)
 		{
+			WebProxy proxy = null;
 
+			if (!string.IsNullOrWhiteSpace(data.Proxy))
+			{
+				proxy = new WebProxy(data.Proxy);
+
+				if (!string.IsNullOrWhiteSpace(data.AuthName))
+				{
+					proxy.Credentials = new NetworkCredential(data.AuthName, data.AuthPassword);
+				}
+			}
+
+			WebRequest.DefaultWebProxy = proxy;
 		}
 	}
 }
