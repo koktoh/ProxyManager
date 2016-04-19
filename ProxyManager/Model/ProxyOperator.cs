@@ -4,28 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace ProxyManager.Model
 {
 	public static class ProxyOperator
 	{
+		public const int INTERNET_OPTION_SETTINGS_CHANGED = 39;
+		public const int INTERNET_OPTION_REFRESH = 37;
+
+		[DllImport("wininet.dll")]
+		public static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int dwBufgferLength);
+
 		static ProxyOperator() { }
 
 		public static void SetProxy(ConfigData data)
 		{
-			WebProxy proxy = null;
+			var regKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings", true);
 
-			if (!string.IsNullOrWhiteSpace(data.Proxy))
+			if (string.IsNullOrWhiteSpace(data.Proxy))
 			{
-				proxy = new WebProxy(data.Proxy);
-
-				if (!string.IsNullOrWhiteSpace(data.AuthName))
-				{
-					proxy.Credentials = new NetworkCredential(data.AuthName, data.AuthPassword);
-				}
+				regKey.SetValue("ProxyServer", string.Concat(data.Proxy, ":", data.Port));
+				regKey.SetValue("ProxyEnable", 1);
+			}
+			else
+			{
+				regKey.SetValue("ProxyEnable", 0);
 			}
 
-			WebRequest.DefaultWebProxy = proxy;
+			InternetSetOption(IntPtr.Zero, INTERNET_OPTION_SETTINGS_CHANGED, IntPtr.Zero, 0);
+			InternetSetOption(IntPtr.Zero, INTERNET_OPTION_REFRESH, IntPtr.Zero, 0);
 		}
 	}
 }

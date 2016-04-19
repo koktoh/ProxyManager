@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ProxyManager.Model;
+using System.IO;
+using System.Diagnostics;
 
 namespace ProxyManager.View
 {
@@ -20,6 +23,21 @@ namespace ProxyManager.View
 	/// </summary>
 	public partial class ProxyView : UserControl
 	{
+		public ConfigData Data
+		{
+			set
+			{
+				if (value == null) return;
+
+				Name.Text = value.Name;
+				Device.Text = value.Device;
+				Proxy.Text = value.Proxy;
+				Port.Text = value.Port;
+				User.Text = value.AuthName;
+				Password.Text = value.AuthPassword;
+			}
+		}
+
 		public ProxyView()
 		{
 			InitializeComponent();

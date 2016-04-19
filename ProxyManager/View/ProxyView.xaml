@@ -5,35 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:vm="clr-namespace:ProxyManager.ViewModel"
              xmlns:local="clr-namespace:ProxyManager.View"
+			 xmlns:local2="clr-namespace:ProxyManager.Common"
              mc:Ignorable="d" 
-             d:DesignHeight="70" d:DesignWidth="300" Margin="5,5,5,5" BorderBrush="Black" BorderThickness="1">
+             d:DesignHeight="100" d:DesignWidth="300" Margin="5,5,5,5" BorderBrush="Black" BorderThickness="0">
     <UserControl.DataContext>
-		<vm:ProxyViewModel />
-	</UserControl.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}" FontSize="15" />
-		<Button Grid.Column="3" Grid.Row="0" Content="Select" FontSize="10" VerticalAlignment="Center" Command="{Binding Path=ExcuteCommand}" />
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Device:" FontSize="12" />
-        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Device}" FontSize="12" />
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Proxy:" FontSize="12" />
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Proxy}" FontSize="12" />
-        <TextBlock Grid.Column="2" Grid.Row="2" Text="Port:" FontSize="12" />
-        <TextBlock Grid.Column="3" Grid.Row="2" Text="{Binding Port}" FontSize="12" />
-        <TextBlock Grid.Column="0" Grid.Row="3" Text="User:" FontSize="12" />
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding User}" FontSize="12" />
-        <TextBlock Grid.Column="2" Grid.Row="3" Text="Password:" FontSize="12" />
-        <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Password}" FontSize="12" />
-    </Grid>
+        <vm:ProxyViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <local2:PasswordConverter x:Key="PassConvert"/>
+	</UserControl.Resources>
+    <GroupBox Margin="0,0,0,0" Height="Auto">
+        <GroupBox.Header>
+            <TextBlock x:Name="Name" FontSize="15" />
+        </GroupBox.Header>
+        <Grid xmlns:local="clr-namespace:ProxyManager.Common">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Device:" FontSize="12" />
+            <TextBlock Grid.Column="1" Grid.Row="0" x:Name="Device" Text="{Binding Device, Mode=TwoWay}" FontSize="12" Grid.ColumnSpan="3" />
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Proxy:" FontSize="12" />
+            <TextBlock Grid.Column="1" Grid.Row="1" x:Name="Proxy" Text="{Binding Proxy, Mode=TwoWay}" FontSize="12" />
+            <TextBlock Grid.Column="2" Grid.Row="1" Text="Port:" FontSize="12" />
+            <TextBlock Grid.Column="3" Grid.Row="1" x:Name="Port" Text="{Binding Port, Mode=TwoWay}" FontSize="12" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="User:" FontSize="12" />
+            <TextBlock Grid.Column="1" Grid.Row="2" x:Name="User" Text="{Binding AuthName, Mode=TwoWay}" FontSize="12" />
+            <TextBlock Grid.Column="2" Grid.Row="2" Text="Password:" FontSize="12" />
+            <TextBlock Grid.Column="3" Grid.Row="2" x:Name="Password" Text="{Binding AuthPassword, Mode=TwoWay, Converter={StaticResource PassConvert}}" FontSize="12" />
+            <Button Grid.Column="3" Grid.Row="3" x:Name="SelectButton" Content="Select" FontSize="10" VerticalAlignment="Center" Command="{Binding ExcuteCommand}" />
+        </Grid>
+    </GroupBox>
 </UserControl>

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using ProxyManager.Model;
+using ProxyManager.Command;
+using ProxyManager.View;
 
 namespace ProxyManager.ViewModel
 {
@@ -17,6 +20,27 @@ namespace ProxyManager.ViewModel
 		private string _port;
 		private string _authName;
 		private string _authPassword;
+		private string _guid;
+
+		private ConfigData _data = new ConfigData();
+
+		public ConfigData Data
+		{
+			set
+			{
+				if (value == null) return;
+
+				_data = value;
+
+				this.Name = _data.Name;
+				this.Device = _data.Device;
+				this.GUID = _data.GUID;
+				this.Proxy = _data.Proxy;
+				this.Port = _data.Port;
+				this.AuthName = _data.AuthName;
+				this.AuthPassword = _data.AuthPassword;
+			}
+		}
 
 		public string Name
 		{
@@ -29,20 +53,6 @@ namespace ProxyManager.ViewModel
 			{
 				_name = value;
 				RaisePropertyChanged("Name");
-			}
-		}
-
-		public string Device
-		{
-			get
-			{
-				return _device;
-			}
-
-			set
-			{
-				_device = value;
-				RaisePropertyChanged("Device");
 			}
 		}
 
@@ -97,19 +107,75 @@ namespace ProxyManager.ViewModel
 
 			set
 			{
-				var str = new string('*', value.Length);
-				_authPassword = str;
+				_authPassword = value;
 				RaisePropertyChanged("AuthPassword");
 			}
 		}
 
+		public string Device
+		{
+			get
+			{
+				return _device;
+			}
 
+			set
+			{
+				_device = value;
+				RaisePropertyChanged("Device");
+			}
+		}
+
+		public string GUID
+		{
+			get
+			{
+				return _guid;
+			}
+
+			set
+			{
+				_guid = value;
+			}
+		}
+
+		private bool canExcute = false;
+		public bool CanExcute
+		{
+			get
+			{
+				return canExcute;
+			}
+		}
+
+		private SetAdapterCommand excute;
+
+		public SetAdapterCommand ExcuteCommand
+		{
+			get
+			{
+				return excute ?? (excute = new SetAdapterCommand(this));
+			}
+		}
+
+		public ProxyViewModel() { }
+
+		public ProxyViewModel(ConfigData cd)
+		{
+			Data = cd;
+		}
 
 		protected virtual void RaisePropertyChanged(string propertyName)
 		{
 			if (PropertyChanged != null)
 			{
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+
+			if (propertyName == "Device")
+			{
+				var device = DeviceOperator.ListUpDevices().Where(x => string.Equals(x.Properties["Name"].Value, this.Device)).First();
+				canExcute = !(bool)device.Properties["NetEnabled"].Value;
 			}
 		}
 	}

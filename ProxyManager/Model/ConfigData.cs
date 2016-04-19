@@ -10,8 +10,7 @@ namespace ProxyManager.Model
 	{
 		public string Name { get; set; }
 		public string Device { get; set; }
-		public string HostName { get; set; }
-		public string HostPassword { get; set; }
+		public string GUID { get; set; }
 		public string Proxy { get; set; }
 		public string Port { get; set; }
 		public string AuthName { get; set; }

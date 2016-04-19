@@ -35,7 +35,7 @@ namespace ProxyManager.Model
 		{
 			using (var sw = new StreamWriter(_configFile, false))
 			{
-				sw.Write(JsonConvert.SerializeObject(configDataList));
+				sw.Write(JsonConvert.SerializeObject(configDataList, Formatting.Indented));
 			}
 		}
 

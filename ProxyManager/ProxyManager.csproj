@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\SetAdapterCommand.cs" />
+    <Compile Include="Common\PasswordConverter.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProxyViewModel.cs" />
     <Compile Include="View\ProxyView.xaml.cs">
       <DependentUpon>ProxyView.xaml</DependentUpon>
@@ -83,7 +87,7 @@
   <ItemGroup>
     <Compile Include="Model\ConfigOperator.cs" />
     <Compile Include="Model\ConfigData.cs" />
-    <Compile Include="Model\DeviceOperater.cs" />
+    <Compile Include="Model\DeviceOperator.cs" />
     <Compile Include="Model\ProxyOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
