@@ -30,19 +30,19 @@ namespace ProxyManager
 
 		private void Window_Loaded(object sender, EventArgs e)
 		{
-			var list = ConfigOperator.LoadConfig();
+			//var list = ConfigOperator.LoadConfig();
 
-			if (list == null) return;	
+			//if (list == null) return;	
 
-			for (int i = 0; i < list.Count; i++)
-			{
-				var item = list[i];
-				var view = new ProxyView();
-				view.Data = item;
-				view.SetValue(Grid.RowProperty, i);
-				grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
-				grid.Children.Add(view);
-			}
+			//for (int i = 0; i < list.Count; i++)
+			//{
+			//	var item = list[i];
+			//	var view = new ProxyView();
+			//	view.Data = item;
+			//	view.SetValue(Grid.RowProperty, i);
+			//	grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+			//	grid.Children.Add(view);
+			//}
 		}
 	}
 }

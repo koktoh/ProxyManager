@@ -23,18 +23,28 @@ namespace ProxyManager.View
 	/// </summary>
 	public partial class ProxyView : UserControl
 	{
+		private ConfigData data;
+
 		public ConfigData Data
 		{
+			get
+			{
+				return data;
+			}
+
 			set
 			{
 				if (value == null) return;
 
-				Name.Text = value.Name;
-				Device.Text = value.Device;
-				Proxy.Text = value.Proxy;
-				Port.Text = value.Port;
-				User.Text = value.AuthName;
-				Password.Text = value.AuthPassword;
+				data = value;
+
+				Name.Text = data.Name;
+				Device.Text = data.Device;
+				GUID.Text = data.GUID;
+				Proxy.Text = data.Proxy;
+				Port.Text = data.Port;
+				User.Text = data.AuthName;
+				Password.Text = data.AuthPassword;
 			}
 		}
 

@@ -46,7 +46,7 @@ namespace ProxyManager.Command
 			var psi = new ProcessStartInfo();
 
 			psi.FileName = fileName;
-			psi.Arguments = proxyViewModel.Device;
+			psi.Arguments = string.Concat("\"", proxyViewModel.Device, "\"");
 
 			try
 			{

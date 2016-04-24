@@ -31,7 +31,7 @@ namespace DeviceManager
 
 			foreach (var mo in adapterList)
 			{
-				if (string.Equals(args[0], mo.Properties["GUID"].Value.ToString()))
+				if (string.Equals(args[0], mo.Properties["Name"].Value.ToString()))
 				{
 					mo.InvokeMethod("Enable", null);
 				}

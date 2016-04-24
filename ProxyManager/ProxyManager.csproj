@@ -41,7 +41,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,11 +63,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\SetAdapterCommand.cs" />
+    <Compile Include="Command\SettingCommand.cs" />
     <Compile Include="Common\PasswordConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProxyViewModel.cs" />
     <Compile Include="View\ProxyView.xaml.cs">
       <DependentUpon>ProxyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingProxyView.xaml.cs">
+      <DependentUpon>SettingProxyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +89,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\ProxyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingProxyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

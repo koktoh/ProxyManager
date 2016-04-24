@@ -11,8 +11,11 @@ namespace ProxyManager.ViewModel
 {
 	class MainViewModel
 	{
+		public List<ConfigData> Data { get; set; }
+
 		public MainViewModel()
 		{
+			Data = ConfigOperator.LoadConfig();
 		}
 	}
 }
